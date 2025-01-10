@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import TouchButton from "./touch-button";
+import TouchButton from "./index";
 import { fn } from "@storybook/test";
 
 const meta = {
