@@ -1,15 +1,19 @@
+"use client";
+
 import TouchButton from "@/app/_components/touch-button";
 import { useEffect, useState } from "react";
 
 export interface NumpadProps {
-  onValueChange: (value: string) => void;
+  onValueChange?: (value: string) => void;
 }
 
 export default function Numpad({ onValueChange }: NumpadProps) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    onValueChange(value);
+    if (onValueChange) {
+      onValueChange(value);
+    }
   }, [onValueChange, value]);
 
   const numbers = new Array(10).fill(1).map((_, i) => (i + 1) % 10);
