@@ -16,11 +16,13 @@ export const Primary: Story = {
   args: {
     label: "TouchButton",
     primary: true,
+    disabled: false,
   },
 };
 export const Secondary: Story = {
   args: {
     label: "TouchButton",
     primary: false,
+    disabled: false,
   },
 };
