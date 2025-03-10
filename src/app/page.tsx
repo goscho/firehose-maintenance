@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import HoseSelector from "@/app/_components/hose-selector";
 
 export default async function Home() {
   const session = await auth();
@@ -6,7 +7,7 @@ export default async function Home() {
 
   return (
     <main>
-      <div>main</div>
+      <HoseSelector />
     </main>
   );
 }
