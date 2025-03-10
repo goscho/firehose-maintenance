@@ -6,5 +6,5 @@ export interface HosePageProps {
 
 export default async function HosePage({ params }: HosePageProps) {
   const { number } = await params;
-  return <div>Reinigen & Prüfen: {number}</div>;
+  return <div>Hier gibts bald Details zum Schlauch {number}</div>;
 }
