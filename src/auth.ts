@@ -22,6 +22,14 @@ const authConfig = {
       async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
 
+        // TODO: Remove this
+        if (process.env.DUMMY_AUTH) {
+          return {
+            id: "dummy-user-id",
+            name: "DummyUser",
+          };
+        }
+
         // If you return null then an error will be displayed advising the user to check their details.
         if (!credentials || !credentials.password || !credentials.username) {
           console.log("no credentials provided");
