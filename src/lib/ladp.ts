@@ -17,7 +17,7 @@ const buildLdapOptions = (
 
   return {
     ldapOpts: {
-      url: process.env.AUTH_LDAP_SERVER_URL,
+      url,
       // tlsOptions: { rejectUnauthorized: false }
     },
     userDn: `cn=${username},ou=users,dc=example,dc=org`,

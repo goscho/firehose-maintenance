@@ -23,7 +23,7 @@ const authConfig = {
         // Add logic here to look up the user from the credentials supplied
 
         // TODO: Remove this
-        if (process.env.DUMMY_AUTH) {
+        if (process.env.DUMMY_AUTH === "true") {
           return {
             id: "dummy-user-id",
             name: "DummyUser",
@@ -70,4 +70,4 @@ const authConfig = {
   },
 } satisfies NextAuthConfig;
 
-export const { handlers, auth, signOut } = NextAuth(authConfig);
+export const { handlers, auth, signOut, signIn } = NextAuth(authConfig);
