@@ -5,6 +5,7 @@ export interface TouchButtonProps {
   primary?: boolean;
   disabled?: boolean;
   onClick?: () => void;
+  className?: string;
 }
 
 export default function TouchButton({
@@ -12,6 +13,7 @@ export default function TouchButton({
   primary = false,
   disabled = false,
   onClick,
+  className,
 }: TouchButtonProps) {
   const classNames = [
     "inline-block",
@@ -28,6 +30,7 @@ export default function TouchButton({
     if (primary) {
       classNames.push("bg-gray-300");
     } else {
+      // secondary
       classNames.push("bg-gray-100");
     }
   } else if (primary) {
@@ -38,6 +41,7 @@ export default function TouchButton({
       "border-indigo-800",
     );
   } else {
+    // secondary
     classNames.push(
       "bg-gray-100",
       "active:bg-gray-300",
@@ -46,10 +50,17 @@ export default function TouchButton({
     );
   }
 
+  function concatClassNames() {
+    if (className) {
+      classNames.push(className);
+    }
+    return classNames.join(" ");
+  }
+
   return (
     <button
       type="button"
-      className={classNames.join(" ")}
+      className={concatClassNames()}
       onClick={onClick}
       disabled={disabled}
     >
