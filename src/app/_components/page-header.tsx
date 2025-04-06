@@ -1,9 +1,9 @@
 import Link from "next/link";
 import SignOutButton from "@/app/_components/sign-out-button";
-import { useAuth } from "@/app/_hooks/useAuth";
+import { requireAuth } from "@/lib/requireAuth";
 
 export default async function PageHeader() {
-  const session = await useAuth();
+  const session = await requireAuth();
 
   const loggedIn = !!session?.user;
 
