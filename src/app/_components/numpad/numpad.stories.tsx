@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 import Numpad from "./index";
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 const meta = {
   component: Numpad,

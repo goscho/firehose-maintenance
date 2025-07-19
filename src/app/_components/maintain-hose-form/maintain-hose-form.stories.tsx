@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 
 import MaintainHoseForm from "./maintain-hose-form";
-import { fn } from "@storybook/test";
+import { fn } from "storybook/test";
 
 const meta = {
   component: MaintainHoseForm,
