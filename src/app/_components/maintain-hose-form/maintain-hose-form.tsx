@@ -41,7 +41,7 @@ export default function MaintainHoseForm({
             placeholder={"Fehlerbeschreibung"}
             list={"defects"}
             ref={defectDescriptionInput}
-            className={"p-5 flex-grow text-xl rounded"}
+            className={"p-5 grow text-xl rounded-sm"}
           />
           <datalist id={"defects"}>
             {defectDescriptions.map((defect) => (

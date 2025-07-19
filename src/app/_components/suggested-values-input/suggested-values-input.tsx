@@ -44,7 +44,7 @@ const SuggestedValuesInput: React.FC<SuggestedValuesInputProps> = ({
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Fehlerbeschreibung"
-          className="w-full p-5 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l text-xl "
+          className="w-full p-5 border border-gray-300 focus:outline-hidden focus:ring-2 focus:ring-blue-500 rounded-l text-xl "
         />
         <TouchButton
           onClick={toggleSuggestions}
@@ -54,7 +54,7 @@ const SuggestedValuesInput: React.FC<SuggestedValuesInputProps> = ({
         />
       </div>
       {isSuggestionsOpen && (
-        <ul className="absolute left-0 right-0 mt-1 max-h-40 overflow-y-auto bg-white border border-gray-300 rounded shadow-lg z-10 text-xl ">
+        <ul className="absolute left-0 right-0 mt-1 max-h-40 overflow-y-auto bg-white border border-gray-300 rounded-sm shadow-lg z-10 text-xl ">
           {suggestedValues.map((suggestion) => (
             <li
               key={suggestion}

@@ -17,7 +17,7 @@ export default function TouchButton({
 }: TouchButtonProps) {
   const classNames = [
     "inline-block",
-    "rounded",
+    "rounded-sm",
     "p-5",
     "min-w-[80px]",
     "text-2xl",
