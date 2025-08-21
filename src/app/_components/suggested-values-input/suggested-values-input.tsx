@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { HTMLAttributes, useEffect, useState } from "react";
 import TouchButton from "@/app/_components/touch-button";
 
-interface SuggestedValuesInputProps {
+interface SuggestedValuesInputProps extends HTMLAttributes<HTMLDivElement> {
   suggestedValues: string[];
   onValueChange?: (value: string) => void;
 }
@@ -9,6 +9,8 @@ interface SuggestedValuesInputProps {
 const SuggestedValuesInput: React.FC<SuggestedValuesInputProps> = ({
   suggestedValues,
   onValueChange,
+  className,
+  ...rest
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState<boolean>(false);
@@ -36,9 +38,11 @@ const SuggestedValuesInput: React.FC<SuggestedValuesInputProps> = ({
     setIsSuggestionsOpen(!isSuggestionsOpen);
   };
 
+  const rootClassName = `relative ${className || ""}`.trim();
+
   return (
-    <div className="relative w-96">
-      <div className="flex items-center">
+    <div className={rootClassName} {...rest}>
+      <div className="w-full flex items-center">
         <input
           type="text"
           value={inputValue}

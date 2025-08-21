@@ -1,6 +1,7 @@
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
 
-export interface TouchButtonProps {
+export interface TouchButtonProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
   label: string;
   primary?: boolean;
   disabled?: boolean;
@@ -14,6 +15,7 @@ export default function TouchButton({
   disabled = false,
   onClick,
   className,
+  ...rest
 }: TouchButtonProps) {
   const classNames = [
     "inline-block",
@@ -63,6 +65,7 @@ export default function TouchButton({
       className={concatClassNames()}
       onClick={onClick}
       disabled={disabled}
+      {...rest}
     >
       {label}
     </button>
