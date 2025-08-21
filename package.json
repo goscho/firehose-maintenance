@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "ldap-authentication": "^3.3.4",
-    "next": "15.4.2",
+    "next": "15.5.0",
     "next-auth": "5.0.0-beta.25",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.1",
@@ -27,10 +27,10 @@
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/node": "^20.19.11",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7",
     "eslint": "^9.31.0",
-    "eslint-config-next": "15.4.2",
+    "eslint-config-next": "15.5.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-storybook": "^9.1.3",
     "postcss": "^8.5.6",
@@ -49,6 +49,10 @@
       "core-js-pure",
       "esbuild",
       "sharp"
-    ]
+    ],
+    "overrides": {
+      "@types/react": "19.1.10",
+      "@types/react-dom": "19.1.7"
+    }
   }
 }
