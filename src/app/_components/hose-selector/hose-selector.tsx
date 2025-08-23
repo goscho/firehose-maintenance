@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import TouchButton from "@/app/_components/touch-button";
 
 export default function HoseSelector() {
-  const prefix = "BK-31";
+  const ownerMarker = "BK-31";
   const [hoseNumber, setHoseNumber] = useState("");
   const router = useRouter();
 
@@ -16,12 +16,12 @@ export default function HoseSelector() {
 
   const buildHoseNumber = () => {
     if (hoseNumber) {
-      return prefix + "-" + hoseNumber;
+      return hoseNumber;
     }
   };
 
   const navigateToHosePage = () => {
-    router.push("/hose/" + buildHoseNumber());
+    router.push("/hose/" + ownerMarker + "__" + buildHoseNumber());
   };
 
   const navigateToHoseMaintenancePage = () => {
@@ -31,7 +31,7 @@ export default function HoseSelector() {
   return (
     <div className={"flex flex-col items-center gap-6"}>
       <div className={"flex flex-row gap-3 h-20 items-center"}>
-        <span className={"inline-block text-3xl"}>BK-32</span>
+        <span className={"inline-block text-3xl"}>{ownerMarker}</span>
         <span
           className={
             "block font-bold text-center text-3xl min-w-40 h-full border-2 p-5"
