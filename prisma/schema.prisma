@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model FailureDescription {
+  id String @id @default(nanoid(12))
+  text String
+}
+
+model Maintenance {
+  id String @id @default(nanoid(12))
+  userId             String
+  timestamp          DateTime
+  testPassed         Boolean
+  failureDescription String?
+  FireHose   FireHose @relation(fields: [fireHoseId], references: [id])
+  fireHoseId String
+}
+
+model FireHose {
+  id               String        @id @default(nanoid(12))
+  number           Int
+  ownerId          String
+  owner            Owner         @relation(fields: [ownerId], references: [id])
+  length           Int
+  diameter         String
+  commissionedAt   DateTime
+  decommissionedAt DateTime?
+  maintenances     Maintenance[]
+
+  @@index(name: "idx_owner_number_decommissioned", [ownerId, number, decommissionedAt])
+}
+
+model Owner {
+  id       String     @id @default(nanoid(12))
+  name     String     @unique
+  marker   String     @unique
+  FireHose FireHose[]
+}
