@@ -6,6 +6,7 @@ import { fn } from "storybook/test";
 const meta = {
   component: Numpad,
   args: {
+    initialValue: "",
     onValueChange: fn(),
   },
 } satisfies Meta<typeof Numpad>;

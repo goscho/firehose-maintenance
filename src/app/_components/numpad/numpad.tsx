@@ -4,11 +4,12 @@ import TouchButton from "@/app/_components/touch-button";
 import { useEffect, useState } from "react";
 
 export interface NumpadProps {
+  initialValue?: string;
   onValueChange?: (value: string) => void;
 }
 
-export default function Numpad({ onValueChange }: NumpadProps) {
-  const [value, setValue] = useState("");
+export default function Numpad({ initialValue, onValueChange }: NumpadProps) {
+  const [value, setValue] = useState(initialValue || "");
 
   useEffect(() => {
     if (onValueChange) {
