@@ -3,16 +3,18 @@ import TouchButton from "@/app/_components/touch-button";
 
 interface SuggestedValuesInputProps extends HTMLAttributes<HTMLDivElement> {
   suggestedValues: string[];
+  initialValue?: string;
   onValueChange?: (value: string) => void;
 }
 
 const SuggestedValuesInput: React.FC<SuggestedValuesInputProps> = ({
   suggestedValues,
+  initialValue,
   onValueChange,
   className,
   ...rest
 }) => {
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>(initialValue || "");
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState<boolean>(false);
 
   useEffect(() => {
