@@ -11,7 +11,7 @@ export interface NewHoseFormProps
   /**
    * Callback when the form is submitted with complete data
    */
-  onSubmit?: (data: Partial<FireHose>) => void;
+  onSubmit?: (data: FireHose) => void;
   /**
    * Callback when the form is canceled
    */
@@ -22,7 +22,7 @@ export interface NewHoseFormProps
   className?: string;
 }
 
-type FormStep = "number" | "owner" | "length" | "diameter" | "review";
+type FormStep = "number" | "length" | "diameter" | "review";
 
 export default function NewHoseForm({
   onSubmit,
@@ -32,6 +32,7 @@ export default function NewHoseForm({
 }: NewHoseFormProps) {
   const [step, setStep] = useState<FormStep>("number");
   const [hoseData, setHoseData] = useState<Partial<FireHose>>({
+    owner: { id: "uFpFjeCOZass", name: "Murrhardt", marker: "BK-31" },
     maintenances: [],
   });
 
@@ -47,13 +48,8 @@ export default function NewHoseForm({
     // Save current input to the appropriate field
     if (step === "number" && inputValue) {
       setHoseData({ ...hoseData, number: parseInt(inputValue, 10) });
-      // TODO remove hard coded owner BK-32 (Murrhardt)
-      setInputValue(hoseData.owner || "BK-32");
-      setStep("owner");
-    } else if (step === "owner" && inputValue) {
-      setHoseData({ ...hoseData, owner: inputValue });
-      setInputValue(hoseData.length?.toString() || "");
       setStep("length");
+      setInputValue(hoseData.length?.toString(10) || "");
     } else if (step === "length" && inputValue) {
       setHoseData({ ...hoseData, length: parseInt(inputValue, 10) });
       setInputValue(hoseData.diameter || "");
@@ -73,7 +69,7 @@ export default function NewHoseForm({
   // Handle form submission
   const handleSubmit = () => {
     if (onSubmit) {
-      onSubmit(hoseData);
+      onSubmit(hoseData as FireHose);
     }
   };
 
@@ -90,15 +86,11 @@ export default function NewHoseForm({
     } else if (step === "diameter") {
       // Go back to length
       setStep("length");
-      setInputValue(hoseData.length?.toString() || "");
+      setInputValue(hoseData.length?.toString(10) || "");
     } else if (step === "length") {
       // Go back to owner
-      setStep("owner");
-      setInputValue(hoseData.owner || "");
-    } else if (step === "owner") {
-      // Go back to number
       setStep("number");
-      setInputValue(hoseData.number?.toString() || "");
+      setInputValue(hoseData.number?.toString(10) || "");
     }
   };
 
@@ -112,24 +104,11 @@ export default function NewHoseForm({
             {inputValue}
           </span>
         </div>
-        <Numpad onValueChange={handleNumpadValueChange} />
-      </div>
-    );
-  }
-
-  function renderOwnerStep() {
-    return (
-      <div className="flex flex-col items-center gap-6">
-        <h2 className="text-2xl font-bold">Eigentümer eingeben</h2>
-        <div className="flex flex-row gap-3 h-20 items-center">
-          <span className="inline-block text-3xl">Eigentümer:</span>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="block font-bold text-center text-3xl w-36 h-full border-2 p-5"
-          />
-        </div>
+        <Numpad
+          key="number"
+          onValueChange={handleNumpadValueChange}
+          initialValue={inputValue}
+        />
       </div>
     );
   }
@@ -146,7 +125,11 @@ export default function NewHoseForm({
             {inputValue}
           </span>
         </div>
-        <Numpad onValueChange={handleNumpadValueChange} />
+        <Numpad
+          key="length"
+          onValueChange={handleNumpadValueChange}
+          initialValue={inputValue}
+        />
       </div>
     );
   }
@@ -159,6 +142,7 @@ export default function NewHoseForm({
           <span className="inline-block text-3xl">Durchmesser:</span>
           <SuggestedValuesInput
             suggestedValues={["A", "B", "C", "D"]}
+            initialValue={inputValue}
             onValueChange={setInputValue}
             className={"w-36"}
           />
@@ -178,7 +162,7 @@ export default function NewHoseForm({
           </div>
           <div className="flex flex-row justify-between border-b pb-2">
             <span className="font-bold">Eigentümer:</span>
-            <span>{hoseData.owner}</span>
+            <span>{hoseData.owner?.marker}</span>
           </div>
           <div className="flex flex-row justify-between border-b pb-2">
             <span className="font-bold">Länge:</span>
@@ -197,8 +181,6 @@ export default function NewHoseForm({
   const renderStep = () => {
     if (step === "number") {
       return renderNumberStep();
-    } else if (step === "owner") {
-      return renderOwnerStep();
     } else if (step === "length") {
       return renderLengthStep();
     } else if (step === "diameter") {
