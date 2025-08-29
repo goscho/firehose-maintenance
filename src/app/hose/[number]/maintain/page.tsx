@@ -1,9 +1,12 @@
 import MaintainHoseForm from "@/app/_components/maintain-hose-form";
 import { redirect } from "next/navigation";
+import { createMaintenance } from "@/lib/maintenanceRepository";
+import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
+import { requireAuth } from "@/lib/requireAuth";
 
 export interface HoseMaintenancePageProps {
   params: Promise<{
-    number: number;
+    number: string;
   }>;
 }
 
@@ -11,18 +14,57 @@ export default async function HoseMaintenancePage({
   params,
 }: HoseMaintenancePageProps) {
   const { number } = await params;
+  const [owner, hoseNumber] = decodeURIComponent(number).split("__");
 
-  const defectDescriptions = ["Einband defekt", "Loch im Schlauch", "..."];
+  const session = await requireAuth();
+  const userId = session?.user?.id;
+
+  if (!userId) {
+    console.log("no user logged in - redirecting to home");
+    redirect("/");
+  }
+
+  const firehose = await getFireHoseByNumberAndOwner(
+    parseInt(hoseNumber),
+    owner,
+  );
+
+  if (!firehose) {
+    console.log(`firehose ${number} not found`);
+    redirect("/");
+  }
+
+  const defectDescriptions = [
+    "Einband defekt",
+    "Loch im Schlauch",
+    "sonstiges",
+  ];
 
   const success = async () => {
     "use server";
-    console.log("check success");
+    console.log("check succeeded", number, owner, hoseNumber);
+
+    await createMaintenance({
+      userId: userId,
+      fireHoseId: firehose.id,
+      testPassed: true,
+      failureDescription: null,
+      timestamp: new Date(),
+    });
+    console.log("maintenance saved", number);
     redirect("/");
   };
 
   const failed = async (msg: string) => {
     "use server";
     console.log("check failed - reason: ", msg);
+    await createMaintenance({
+      userId: userId,
+      fireHoseId: firehose.id,
+      testPassed: false,
+      failureDescription: msg,
+      timestamp: new Date(),
+    });
     redirect("/");
   };
 
