@@ -61,6 +61,7 @@ const authConfig = {
     },
     async session({ session, token, user }) {
       console.debug("session callback:", session, token, user);
+      session.user.id = token.sub!;
       return session;
     },
     async jwt({ token, user, account, profile }) {
