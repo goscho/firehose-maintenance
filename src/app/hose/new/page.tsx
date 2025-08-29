@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import NewHoseForm from "@/app/_components/new-hose-form";
 import { FireHose } from "@/lib/types";
-import { createFireHose } from "@/lib/repository";
+import { createFireHose } from "@/lib/fireHoseRepository";
 
 export default function NewHosePage() {
   const router = useRouter();

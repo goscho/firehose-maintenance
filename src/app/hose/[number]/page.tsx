@@ -1,4 +1,4 @@
-import { getFireHoseByNumberAndOwner } from "@/lib/repository";
+import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
 
 export interface HosePageProps {
   params: Promise<{
