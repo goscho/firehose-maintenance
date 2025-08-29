@@ -16,12 +16,12 @@ export default function HoseSelector() {
 
   const buildHoseNumber = () => {
     if (hoseNumber) {
-      return hoseNumber;
+      return ownerMarker + "__" + hoseNumber;
     }
   };
 
   const navigateToHosePage = () => {
-    router.push("/hose/" + ownerMarker + "__" + buildHoseNumber());
+    router.push("/hose/" + buildHoseNumber());
   };
 
   const navigateToHoseMaintenancePage = () => {
