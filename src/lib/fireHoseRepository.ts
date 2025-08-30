@@ -141,7 +141,11 @@ export async function getFireHoseByNumberAndOwner(
     },
     include: {
       owner: true,
-      maintenances: true,
+      maintenances: {
+        orderBy: {
+          timestamp: "desc",
+        },
+      },
     },
   });
 
