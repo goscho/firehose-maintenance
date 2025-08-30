@@ -4,7 +4,7 @@ import { HTMLAttributes, useState } from "react";
 import TouchButton from "@/app/_components/touch-button";
 import Numpad from "@/app/_components/numpad";
 import SuggestedValuesInput from "@/app/_components/suggested-values-input";
-import { FireHose } from "@/lib/types";
+import { FireHose, FireHoseDiameter } from "@/lib/types";
 
 export interface NewHoseFormProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onSubmit"> {
@@ -59,7 +59,7 @@ export default function NewHoseForm({
       if (["A", "B", "C", "D"].includes(inputValue)) {
         setHoseData({
           ...hoseData,
-          diameter: inputValue as "A" | "B" | "C" | "D",
+          diameter: inputValue as FireHoseDiameter,
         });
         setStep("review");
       }

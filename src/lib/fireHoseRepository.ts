@@ -1,20 +1,20 @@
 "use server";
 
 import prisma from "./prisma";
-import { FireHose } from "./types";
+import { FireHose, FireHoseDiameter } from "./types";
 
 function validateFireHoseDiameter(value: string): boolean {
   return ["A", "B", "C", "D"].includes(value);
 }
 
-function castToFireHoseDiameter(value: string): "A" | "B" | "C" | "D" {
+function castToFireHoseDiameter(value: string): FireHoseDiameter {
   if (validateFireHoseDiameter(value)) {
-    return value as "A" | "B" | "C" | "D";
+    return value as FireHoseDiameter;
   }
   throw new Error("Invalid FireHose diameter");
 }
 
-function castFromFireHoseDiameter(value: "A" | "B" | "C" | "D"): string {
+function castFromFireHoseDiameter(value: FireHoseDiameter): string {
   return value as string;
 }
 
@@ -28,7 +28,7 @@ export async function createFireHose(data: {
   number: number;
   ownerId: string;
   length: number;
-  diameter: "A" | "B" | "C" | "D";
+  diameter: FireHoseDiameter;
   commissionedAt: Date | null;
 }): Promise<FireHose> {
   // Validate required fields

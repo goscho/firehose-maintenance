@@ -13,12 +13,14 @@ export interface Owner {
   marker: string;
 }
 
+export type FireHoseDiameter = "A" | "B" | "C" | "D";
+
 export interface FireHose {
   id: string;
   number: number;
   owner: Owner;
   length: number;
-  diameter: "A" | "B" | "C" | "D";
+  diameter: FireHoseDiameter;
   commissionedAt: Date;
   decommissionedAt: Date | null;
   maintenances: Maintenance[];
