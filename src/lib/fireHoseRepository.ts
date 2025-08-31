@@ -2,6 +2,7 @@
 
 import prisma from "./prisma";
 import { FireHose, FireHoseDiameter } from "./types";
+import { queryMinFreeHoseNumber } from "@/app/generated/prisma/sql";
 
 function validateFireHoseDiameter(value: string): boolean {
   return ["A", "B", "C", "D"].includes(value);
@@ -366,4 +367,21 @@ export async function deleteFireHose(id: string): Promise<boolean> {
   });
 
   return true;
+}
+
+/**
+ * Finds the smallest number not assigned to an commissioned fire hose for a given owner
+ * @param ownerId the owner to find the number for
+ */
+export async function findMinFreeHoseNumber(ownerId: string): Promise<number> {
+  if (!ownerId) {
+    throw new Error("FireHose ID is required");
+  }
+  const results = await prisma.$queryRawTyped(queryMinFreeHoseNumber(ownerId));
+  const minFreeNumber = results[0];
+
+  if (!minFreeNumber?.min_free_number) {
+    throw new Error("No free FireHose numbers found");
+  }
+  return minFreeNumber.min_free_number;
 }
