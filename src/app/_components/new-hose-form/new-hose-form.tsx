@@ -1,10 +1,11 @@
 "use client";
 
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useEffect, useState } from "react";
 import TouchButton from "@/app/_components/touch-button";
 import Numpad from "@/app/_components/numpad";
 import SuggestedValuesInput from "@/app/_components/suggested-values-input";
 import { FireHose, FireHoseDiameter } from "@/lib/types";
+import { findMinFreeHoseNumber } from "@/lib/fireHoseRepository";
 
 export interface NewHoseFormProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onSubmit"> {
@@ -37,6 +38,21 @@ export default function NewHoseForm({
   });
 
   const [inputValue, setInputValue] = useState("");
+  const [freeNumber, setFreeNumber] = useState<number | null>(null);
+  const [freeNumberLoading, setFreeNumberLoading] = useState(false);
+  const [manualNumber, setManualNumber] = useState(false);
+
+  useEffect(() => {
+    setFreeNumberLoading(true);
+    const queryFreeNumber = async () => {
+      if (hoseData.owner?.id && step === "number") {
+        const number = await findMinFreeHoseNumber(hoseData.owner?.id);
+        setFreeNumber(number);
+        setFreeNumberLoading(false);
+      }
+    };
+    queryFreeNumber();
+  }, [step, hoseData]);
 
   // Handle numpad value changes
   const handleNumpadValueChange = (value: string) => {
@@ -104,11 +120,36 @@ export default function NewHoseForm({
             {inputValue}
           </span>
         </div>
-        <Numpad
-          key="number"
-          onValueChange={handleNumpadValueChange}
-          initialValue={inputValue}
-        />
+        {!manualNumber ? (
+          <div className="flex flex-row gap-3 h-20 items-center">
+            <div>
+              <TouchButton
+                label={"manuell eingeben"}
+                onClick={() => setManualNumber(true)}
+              />
+            </div>
+            <div>
+              <TouchButton
+                primary
+                disabled={freeNumberLoading || !freeNumber}
+                label={
+                  freeNumberLoading || !freeNumber
+                    ? "freie Nummer wird gesucht"
+                    : `freie Nummer (${freeNumber}) wählen`
+                }
+                onClick={() => {
+                  setInputValue(freeNumber?.toString(10) || "");
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          <Numpad
+            key="number"
+            onValueChange={handleNumpadValueChange}
+            initialValue={inputValue}
+          />
+        )}
       </div>
     );
   }
