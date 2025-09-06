@@ -25,7 +25,7 @@ export default async function HosePage({ params }: HosePageProps) {
     if (latestMaintenance) {
       return (
         <p>
-          Letze Prüfung am:{" "}
+          Letzte Prüfung am:{" "}
           {latestMaintenance.timestamp.toLocaleString("de-DE", {
             day: "2-digit",
             month: "2-digit",
@@ -34,13 +34,18 @@ export default async function HosePage({ params }: HosePageProps) {
             minute: "2-digit",
             hour12: false,
           })}
-          {latestMaintenance.testPassed
-            ? " bestanden"
-            : " nicht bestanden: " + latestMaintenance.failureDescription}
+          {latestMaintenance.testPassed ? (
+            <span className={"text-green-700"}> bestanden</span>
+          ) : (
+            <span className={"text-red-700"}>
+              {" "}
+              nicht bestanden: {latestMaintenance.failureDescription}
+            </span>
+          )}
         </p>
       );
     }
-    return <p>Letze Prüfung: noch nicht geprüft</p>;
+    return <p>Letzte Prüfung: noch nicht geprüft</p>;
   }
 
   return (
