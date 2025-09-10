@@ -5,9 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   previewFeatures = ["typedSql"]
-  output   = "../src/app/generated/prisma"
+  output        = "../src/app/generated/prisma"
   // definition required to relase to both plattforms amd64 and arm64
   binaryTargets = ["native", "linux-musl-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
 }
@@ -23,8 +23,8 @@ model FailureDescription {
 }
 
 model Maintenance {
-  id String @id @default(nanoid(12))
-  userId             String
+  id         String   @id @default(nanoid(12))
+  username   String
   timestamp          DateTime
   testPassed         Boolean
   failureDescription String?
