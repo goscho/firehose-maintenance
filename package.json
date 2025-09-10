@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@prisma/client": "^6.14.0",
-    "ldap-authentication": "^3.3.4",
     "next": "15.5.0",
     "next-auth": "5.0.0-beta.25",
     "react": "19.1.1",

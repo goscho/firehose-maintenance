@@ -17,10 +17,14 @@ export default async function HoseMaintenancePage({
   const [owner, hoseNumber] = decodeURIComponent(number).split("__");
 
   const session = await requireAuth();
-  const userId = session?.user?.id;
+  const userName = session?.user?.name;
 
-  if (!userId) {
-    console.log("no user logged in - redirecting to home");
+  if (!userName) {
+    console.log(
+      "no user found in session - redirecting to home",
+      "session",
+      session,
+    );
     redirect("/");
   }
 
@@ -45,7 +49,7 @@ export default async function HoseMaintenancePage({
     console.log("check succeeded", number, owner, hoseNumber);
 
     await createMaintenance({
-      userId: userId,
+      userId: userName,
       fireHoseId: firehose.id,
       testPassed: true,
       failureDescription: null,
@@ -59,7 +63,7 @@ export default async function HoseMaintenancePage({
     "use server";
     console.log("check failed - reason: ", msg);
     await createMaintenance({
-      userId: userId,
+      userId: userName,
       fireHoseId: firehose.id,
       testPassed: false,
       failureDescription: msg,
