@@ -3,7 +3,7 @@
 import { HTMLAttributes, useState } from "react";
 import TouchButton from "@/app/_components/touch-button";
 import Numpad from "@/app/_components/numpad";
-import SuggestedValuesInput from "@/app/_components/suggested-values-input";
+import OptionList from "@/app/_components/option-list";
 import { FireHose, FireHoseDiameter } from "@/lib/types";
 
 export interface NewHoseFormProps
@@ -171,18 +171,22 @@ export default function NewHoseForm({
   }
 
   function renderDiameterStep() {
+    const diameterOptions = [
+      { value: "A", label: "A" },
+      { value: "B", label: "B" },
+      { value: "C", label: "C" },
+      { value: "D", label: "D" },
+    ];
+
     return (
       <div className="flex flex-col items-center gap-6">
         <h2 className="text-2xl font-bold">Durchmesser auswählen</h2>
-        <div className="flex flex-row gap-3 h-20 items-center">
-          <span className="inline-block text-3xl">Durchmesser:</span>
-          <SuggestedValuesInput
-            suggestedValues={["A", "B", "C", "D"]}
-            initialValue={inputValue}
-            onValueChange={setInputValue}
-            className={"w-36"}
-          />
-        </div>
+        <OptionList
+          options={diameterOptions}
+          selectedValue={inputValue}
+          onSelectionChange={setInputValue}
+          className="w-72"
+        />
       </div>
     );
   }
