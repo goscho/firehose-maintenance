@@ -1,11 +1,10 @@
 "use client";
 
-import { HTMLAttributes, useEffect, useState } from "react";
+import { HTMLAttributes, useState } from "react";
 import TouchButton from "@/app/_components/touch-button";
 import Numpad from "@/app/_components/numpad";
 import SuggestedValuesInput from "@/app/_components/suggested-values-input";
 import { FireHose, FireHoseDiameter } from "@/lib/types";
-import { findMinFreeHoseNumber } from "@/lib/fireHoseRepository";
 
 export interface NewHoseFormProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onSubmit"> {
@@ -21,6 +20,14 @@ export interface NewHoseFormProps
    * Additional class name for the form container
    */
   className?: string;
+  /**
+   * The next free hose number available
+   */
+  freeNumber?: number | null;
+  /**
+   * Whether the free number is currently being loaded
+   */
+  freeNumberLoading?: boolean;
 }
 
 type FormStep = "number" | "length" | "diameter" | "review";
@@ -29,6 +36,8 @@ export default function NewHoseForm({
   onSubmit,
   onCancel,
   className,
+  freeNumber,
+  freeNumberLoading = false,
   ...rest
 }: NewHoseFormProps) {
   const [step, setStep] = useState<FormStep>("number");
@@ -38,21 +47,7 @@ export default function NewHoseForm({
   });
 
   const [inputValue, setInputValue] = useState("");
-  const [freeNumber, setFreeNumber] = useState<number | null>(null);
-  const [freeNumberLoading, setFreeNumberLoading] = useState(false);
   const [manualNumber, setManualNumber] = useState(false);
-
-  useEffect(() => {
-    setFreeNumberLoading(true);
-    const queryFreeNumber = async () => {
-      if (hoseData.owner?.id && step === "number") {
-        const number = await findMinFreeHoseNumber(hoseData.owner?.id);
-        setFreeNumber(number);
-        setFreeNumberLoading(false);
-      }
-    };
-    queryFreeNumber();
-  }, [step, hoseData]);
 
   // Handle numpad value changes
   const handleNumpadValueChange = (value: string) => {

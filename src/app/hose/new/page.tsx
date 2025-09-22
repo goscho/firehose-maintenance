@@ -3,12 +3,31 @@
 import { useRouter } from "next/navigation";
 import NewHoseForm from "@/app/_components/new-hose-form";
 import { FireHose } from "@/lib/types";
-import { createFireHose } from "@/lib/fireHoseRepository";
-import { useState } from "react";
+import { createFireHose, findMinFreeHoseNumber } from "@/lib/fireHoseRepository";
+import { useState, useEffect } from "react";
 
 export default function NewHosePage() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [freeNumber, setFreeNumber] = useState<number | null>(null);
+  const [freeNumberLoading, setFreeNumberLoading] = useState(false);
+
+  // Load free number when page loads
+  useEffect(() => {
+    const loadFreeNumber = async () => {
+      setFreeNumberLoading(true);
+      try {
+        // Using the hardcoded owner ID from the form
+        const number = await findMinFreeHoseNumber("uFpFjeCOZass");
+        setFreeNumber(number);
+      } catch (err) {
+        console.error("Error loading free number:", err);
+      } finally {
+        setFreeNumberLoading(false);
+      }
+    };
+    loadFreeNumber();
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (data: FireHose) => {
@@ -38,7 +57,12 @@ export default function NewHosePage() {
     <main className="flex min-h-screen flex-col items-center p-6 gap-6">
       <h1 className="text-3xl font-bold">Neuen Schlauch anlegen</h1>
       {error && <p className="text-red-500">{error}</p>}
-      <NewHoseForm onSubmit={handleSubmit} onCancel={handleCancel} />
+      <NewHoseForm 
+        onSubmit={handleSubmit} 
+        onCancel={handleCancel}
+        freeNumber={freeNumber}
+        freeNumberLoading={freeNumberLoading}
+      />
     </main>
   );
 }
