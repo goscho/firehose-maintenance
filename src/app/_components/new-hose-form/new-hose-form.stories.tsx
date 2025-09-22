@@ -8,6 +8,8 @@ const meta = {
   args: {
     onSubmit: fn(),
     onCancel: fn(),
+    freeNumber: 42,
+    freeNumberLoading: false,
   },
   parameters: {
     layout: "centered",
@@ -20,6 +22,20 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
+};
+
+export const LoadingFreeNumber: Story = {
+  args: {
+    freeNumberLoading: true,
+    freeNumber: null,
+  },
+};
+
+export const NoFreeNumber: Story = {
+  args: {
+    freeNumberLoading: false,
+    freeNumber: null,
+  },
 };
 
 // This story demonstrates how the component would look with a custom className
