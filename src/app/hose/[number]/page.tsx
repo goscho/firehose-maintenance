@@ -1,5 +1,6 @@
 import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
 import TouchButton from "@/app/_components/touch-button";
+import HoseDetails from "@/app/_components/hose-details";
 import Link from "next/link";
 
 export interface HosePageProps {
@@ -17,67 +18,26 @@ export default async function HosePage({ params }: HosePageProps) {
     owner,
   );
 
-  const latestMaintenance = firehose?.maintenances[0];
-
-  const maintenanceCount = firehose?.maintenances.length;
-
-  function renderTestResults() {
-    if (latestMaintenance) {
-      return (
-        <p>
-          Letzte Prüfung am:{" "}
-          {latestMaintenance.timestamp.toLocaleString("de-DE", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          })}
-          {latestMaintenance.testPassed ? (
-            <span className={"text-green-700"}> bestanden</span>
-          ) : (
-            <span className={"text-red-700"}>
-              {" "}
-              nicht bestanden: {latestMaintenance.failureDescription}
-            </span>
-          )}
-        </p>
-      );
-    }
-    return <p>Letzte Prüfung: noch nicht geprüft</p>;
+  if (!firehose) {
+    return <div>Schlauch nicht gefunden</div>;
   }
 
   return (
-    <>
-      <h1 className={"text-2xl"}>
-        Schlauch: {firehose?.owner.marker}-{firehose?.number}
+    <main className="flex min-h-screen flex-col items-center p-6 gap-6">
+      <h1 className="text-3xl font-bold">
+        Schlauch: {firehose.owner.marker}-{firehose.number}
       </h1>
-      <div>
-        <p>
-          Im Dienst seit:{" "}
-          {firehose?.commissionedAt.toLocaleString("de-DE", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })}
-        </p>
-        {renderTestResults()}
-        <p>
-          Dimensionen: {firehose?.diameter} {firehose?.length} m
-        </p>
-        <p>Anzahl Prüfungen: {maintenanceCount}</p>
-      </div>
-      <div>
-        <Link href={"/"}>
-          <TouchButton label={"Abbrechen"} />
+      <HoseDetails firehose={firehose} />
+      <div className="flex gap-4 mt-6">
+        <Link href="/">
+          <TouchButton label="Abbrechen" />
         </Link>
         <Link
-          href={`/hose/${firehose?.owner.marker}__${firehose?.number}/maintain`}
+          href={`/hose/${firehose.owner.marker}__${firehose.number}/maintain`}
         >
-          <TouchButton label={"Reinigen & Prüfen"} primary />
+          <TouchButton label="Reinigen & Prüfen" primary />
         </Link>
       </div>
-    </>
+    </main>
   );
 }
