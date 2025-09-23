@@ -1,8 +1,8 @@
 import NextAuth, { NextAuthConfig } from "next-auth";
 import Authentik from "next-auth/providers/authentik";
-import Logto from "next-auth/providers/logto"
+import Logto from "next-auth/providers/logto";
 
-var authConfig: NextAuthConfig;
+let authConfig: NextAuthConfig;
 
 if (process.env.NODE_ENV === "production") {
   authConfig = {
@@ -13,20 +13,24 @@ if (process.env.NODE_ENV === "production") {
         issuer: process.env.AUTHENTIK_ISSUER,
       }),
     ],
-    callbacks: {},
-  }
-}
-else {
+  };
+} else {
   authConfig = {
     providers: [
       Logto({
         clientId: process.env.LOGTO_ID,
         clientSecret: process.env.LOGTO_SECRET,
-        issuer: process.env.LOGTO_ISSUER
+        issuer: process.env.LOGTO_ISSUER,
       }),
     ],
-    callbacks: {},
-  }
+  };
 }
+
+authConfig.callbacks = {
+  authorized: async ({ auth }) => {
+    // Logged in users are authenticated, otherwise redirect to login page
+    return !!auth;
+  },
+};
 
 export const { handlers, auth, signOut, signIn } = NextAuth(authConfig);
