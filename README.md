@@ -78,8 +78,14 @@ NEXTAUTH_URL="http://localhost:3000"
 ### Installation
 
 ```bash
-# Start Postgres (and Adminer)
+# Start Postgres, Logto and Adminer
 docker compose up -d
+````
+Visit [your local Logto admin panel](http://localhost:3002/) and create an app to be used with this application. Use `http://localhost:3000/api/auth/callback/logto` as RedirectURI
+
+```bash
+# copy template.env to .env and provide the the missing values
+mv template.env .env
 
 # Install dependencies
 pnpm install
