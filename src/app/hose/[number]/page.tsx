@@ -33,6 +33,11 @@ export default async function HosePage({ params }: HosePageProps) {
           <TouchButton label="Abbrechen" />
         </Link>
         <Link
+          href={`/hose/${firehose.owner.marker}__${firehose.number}/edit-length`}
+        >
+          <TouchButton label="Länge bearbeiten" />
+        </Link>
+        <Link
           href={`/hose/${firehose.owner.marker}__${firehose.number}/maintain`}
         >
           <TouchButton label="Reinigen & Prüfen" primary />
