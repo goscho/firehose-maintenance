@@ -38,6 +38,11 @@ export default async function HosePage({ params }: HosePageProps) {
           <TouchButton label="Länge bearbeiten" />
         </Link>
         <Link
+          href={`/hose/${firehose.owner.marker}__${firehose.number}/decommission`}
+        >
+          <TouchButton label="Ausmustern" />
+        </Link>
+        <Link
           href={`/hose/${firehose.owner.marker}__${firehose.number}/maintain`}
         >
           <TouchButton label="Reinigen & Prüfen" primary />
