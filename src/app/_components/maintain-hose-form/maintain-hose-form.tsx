@@ -8,12 +8,14 @@ export interface MaintainHoseFormProps {
   defectDescriptions: string[];
   onCheckSuccess?: () => void;
   onCheckFailed?: (msg: string, navigateToHoseDetails: boolean) => void;
+  onCancel?: () => void;
 }
 
 export default function MaintainHoseForm({
   defectDescriptions,
   onCheckSuccess,
   onCheckFailed,
+  onCancel,
 }: MaintainHoseFormProps) {
   const [defectFound, setDefectFound] = useState(false);
   const [defectDescription, setDefectDescription] = useState("");
@@ -33,6 +35,12 @@ export default function MaintainHoseForm({
           label={"Schlauch defekt"}
           disabled={defectFound}
           onClick={() => setDefectFound(true)}
+        />
+        <div className={"h-12"}></div>
+        <TouchButton
+          label={"Abbrechen"}
+          disabled={defectFound}
+          onClick={onCancel}
         />
       </div>
     );

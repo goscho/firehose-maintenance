@@ -48,6 +48,11 @@ export default async function HoseMaintenancePage({
     "sonstiges",
   ];
 
+  const cancel = async () => {
+    "use server";
+    redirect("/");
+  };
+
   const success = async () => {
     "use server";
     console.log("check succeeded", number, owner, hoseNumber);
@@ -87,6 +92,7 @@ export default async function HoseMaintenancePage({
         defectDescriptions={defectDescriptions}
         onCheckSuccess={success}
         onCheckFailed={failed}
+        onCancel={cancel}
       />
     </main>
   );
