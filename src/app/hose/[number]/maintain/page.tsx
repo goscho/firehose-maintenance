@@ -1,8 +1,8 @@
-import MaintainHoseForm from "@/app/_components/maintain-hose-form";
 import { redirect } from "next/navigation";
 import { createMaintenance } from "@/lib/maintenanceRepository";
 import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
 import { requireAuth } from "@/lib/requireAuth";
+import MaintainHoseForm from "@/app/_components/maintain-hose-form";
 
 export interface HoseMaintenancePageProps {
   params: Promise<{
@@ -59,7 +59,7 @@ export default async function HoseMaintenancePage({
     redirect("/");
   };
 
-  const failed = async (msg: string) => {
+  const failed = async (msg: string, navigateToHoseDetails: boolean) => {
     "use server";
     console.log("check failed - reason: ", msg);
     await createMaintenance({
@@ -69,7 +69,11 @@ export default async function HoseMaintenancePage({
       failureDescription: msg,
       timestamp: new Date(),
     });
-    redirect("/");
+    if (navigateToHoseDetails) {
+      redirect(`/hose/${encodeURIComponent(number)}`);
+    } else {
+      redirect("/");
+    }
   };
 
   return (

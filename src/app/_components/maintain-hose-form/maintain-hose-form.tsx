@@ -7,7 +7,7 @@ import SuggestedValuesInput from "@/app/_components/suggested-values-input";
 export interface MaintainHoseFormProps {
   defectDescriptions: string[];
   onCheckSuccess?: () => void;
-  onCheckFailed?: (msg: string) => void;
+  onCheckFailed?: (msg: string, navigateToHoseDetails: boolean) => void;
 }
 
 export default function MaintainHoseForm({
@@ -38,7 +38,7 @@ export default function MaintainHoseForm({
     );
   } else {
     return (
-      <div className={"flex flex-col gap-3 max-w-md"}>
+      <div className={"flex flex-col gap-3"}>
         <SuggestedValuesInput
           className={"flex flex-row gap-1"}
           suggestedValues={defectDescriptions}
@@ -52,9 +52,17 @@ export default function MaintainHoseForm({
         <div className={"flex flex-row gap-3 justify-end"}>
           <TouchButton label={"zurück"} onClick={() => setDefectFound(false)} />
           <TouchButton
-            label={"Defekt speichern"}
+            label={"Speichern"}
+            onClick={() =>
+              onCheckFailed && onCheckFailed(defectDescription, false)
+            }
+          />
+          <TouchButton
+            label={"Speichern & bearbeiten"}
             primary
-            onClick={() => onCheckFailed && onCheckFailed(defectDescription)}
+            onClick={() =>
+              onCheckFailed && onCheckFailed(defectDescription, true)
+            }
           />
         </div>
       </div>
