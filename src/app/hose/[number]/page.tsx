@@ -2,6 +2,7 @@ import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
 import TouchButton from "@/app/_components/touch-button";
 import HoseDetails from "@/app/_components/hose-details";
 import Link from "next/link";
+import HoseNotFound from "@/app/_components/hose-not-found/hose-not-found";
 
 export interface HosePageProps {
   params: Promise<{
@@ -19,7 +20,11 @@ export default async function HosePage({ params }: HosePageProps) {
   );
 
   if (!firehose) {
-    return <div>Schlauch nicht gefunden</div>;
+    return (
+      <main className="flex min-h-screen flex-col items-center p-6 gap-6">
+        <HoseNotFound ownerMarker={owner} hoseNumber={hoseNumber} />
+      </main>
+    );
   }
 
   return (

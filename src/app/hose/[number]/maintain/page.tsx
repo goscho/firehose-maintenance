@@ -3,6 +3,7 @@ import { createMaintenance } from "@/lib/maintenanceRepository";
 import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
 import { requireAuth } from "@/lib/requireAuth";
 import MaintainHoseForm from "@/app/_components/maintain-hose-form";
+import HoseNotFound from "@/app/_components/hose-not-found/hose-not-found";
 
 export interface HoseMaintenancePageProps {
   params: Promise<{
@@ -34,8 +35,11 @@ export default async function HoseMaintenancePage({
   );
 
   if (!firehose) {
-    console.log(`firehose ${number} not found`);
-    redirect("/");
+    return (
+      <main className={"flex flex-col gap-5 items-center w-full"}>
+        <HoseNotFound ownerMarker={owner} hoseNumber={hoseNumber} />
+      </main>
+    );
   }
 
   const defectDescriptions = [
@@ -77,13 +81,13 @@ export default async function HoseMaintenancePage({
   };
 
   return (
-    <div className={"flex flex-col gap-5 items-center w-full"}>
+    <main className={"flex flex-col gap-5 items-center w-full"}>
       <h2 className={"text-2xl"}>Schlauch {number} reinigen und prüfen</h2>
       <MaintainHoseForm
         defectDescriptions={defectDescriptions}
         onCheckSuccess={success}
         onCheckFailed={failed}
       />
-    </div>
+    </main>
   );
 }
