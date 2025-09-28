@@ -5,6 +5,7 @@ import TouchButton from "@/app/_components/touch-button";
 import Numpad from "@/app/_components/numpad";
 import OptionList from "@/app/_components/option-list";
 import { FireHose, FireHoseDiameter } from "@/lib/types";
+import { OWNER_MURRHARDT } from "@/lib/static";
 
 export interface NewHoseFormProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onSubmit"> {
@@ -42,7 +43,7 @@ export default function NewHoseForm({
 }: NewHoseFormProps) {
   const [step, setStep] = useState<FormStep>("number");
   const [hoseData, setHoseData] = useState<Partial<FireHose>>({
-    owner: { id: "uFpFjeCOZass", name: "Murrhardt", marker: "BK-31" },
+    owner: OWNER_MURRHARDT,
     maintenances: [],
   });
 
