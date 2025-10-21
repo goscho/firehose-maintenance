@@ -1,6 +1,5 @@
 export interface Maintenance {
   id: string;
-  username: string;
   timestamp: Date;
   testPassed: boolean;
   failureDescription: string | null;

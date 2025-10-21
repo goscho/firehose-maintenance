@@ -9,7 +9,6 @@ CREATE TABLE "public"."FailureDescription" (
 -- CreateTable
 CREATE TABLE "public"."Maintenance" (
     "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL,
     "testPassed" BOOLEAN NOT NULL,
     "failureDescription" TEXT,

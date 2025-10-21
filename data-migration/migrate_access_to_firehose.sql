@@ -63,11 +63,10 @@ WITH params AS (SELECT 'BK-31'::text  AS owner_marker,
 
 -- Execute tests import
 INSERT
-INTO public."Maintenance" (id, username, "timestamp", "testPassed", "failureDescription", "fireHoseId")
+INTO public."Maintenance" (id, "timestamp", "testPassed", "failureDescription", "fireHoseId")
 SELECT
     -- Deterministic ID based on source test id
     SUBSTRING(ENCODE(DIGEST('mnt:pruefung:' || t."ID"::text, 'sha256'), 'base64') FROM 1 FOR 12) AS id,
-    COALESCE(NULLIF(ts.full_name, ''), 'import:pruefung')                                        AS username,
     t."DATUM"::timestamp                                                                         AS "timestamp",
     COALESCE(t."BESTANDEN", false)                                                               AS "testPassed",
     NULLIF(t."DEFEKT_BESCHREIBUNG", '')                                                          AS "failureDescription",
@@ -75,7 +74,6 @@ SELECT
 FROM "TBL_PRUEFUNG" t
          JOIN "TBL_SCHLAUCH" s ON s."ID" = t."SCHLAUCH_ID"
          JOIN hose_map hm ON hm."number" = s."NUMMER"
-         LEFT JOIN testers ts ON ts.id = t."PRUEFER_ID"
 ON CONFLICT (id) DO NOTHING;
 -- -- Insert Maintenance entries from REINIGUNG (cleaning) as passed checks with a note
 -- WITH hose_map AS (
@@ -101,14 +99,10 @@ ON CONFLICT (id) DO NOTHING;
 WITH hose_map AS (SELECT f."id", f."number"
                   FROM public."FireHose" f
                            JOIN public."Owner" o ON o."id" = f."ownerId"
-                  WHERE o."marker" = 'BK-31'),
-     testers AS (SELECT p."ID"                                                                        AS id,
-                        TRIM(BOTH FROM CONCAT_WS(' ', NULLIF(p."VORNAME", ''), NULLIF(p."NAME", ''))) AS full_name
-                 FROM "TBL_PRUEFER" p)
+                  WHERE o."marker" = 'BK-31')
 INSERT
-INTO public."Maintenance" (id, username, "timestamp", "testPassed", "failureDescription", "fireHoseId")
+INTO public."Maintenance" (id, "timestamp", "testPassed", "failureDescription", "fireHoseId")
 SELECT SUBSTRING(ENCODE(DIGEST('mnt:pruefung:' || t."ID"::text, 'sha256'), 'base64') FROM 1 FOR 12) AS id,
-       COALESCE(NULLIF(ts.full_name, ''), 'import:pruefung')                                        AS username,
        t."DATUM"::timestamp                                                                         AS "timestamp",
        COALESCE(t."BESTANDEN", false)                                                               AS "testPassed",
        NULLIF(t."DEFEKT_BESCHREIBUNG", '')                                                          AS "failureDescription",
@@ -116,7 +110,6 @@ SELECT SUBSTRING(ENCODE(DIGEST('mnt:pruefung:' || t."ID"::text, 'sha256'), 'base
 FROM "TBL_PRUEFUNG" t
          JOIN "TBL_SCHLAUCH" s ON s."ID" = t."SCHLAUCH_ID"
          JOIN hose_map hm ON hm."number" = s."NUMMER"
-         LEFT JOIN testers ts ON ts.id = t."PRUEFER_ID"
 ON CONFLICT (id) DO NOTHING;
 
 COMMIT;

@@ -24,7 +24,6 @@ model FailureDescription {
 
 model Maintenance {
   id         String   @id @default(nanoid(12))
-  username   String
   timestamp          DateTime
   testPassed         Boolean
   failureDescription String?

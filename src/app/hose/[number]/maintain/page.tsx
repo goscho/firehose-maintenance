@@ -58,7 +58,6 @@ export default async function HoseMaintenancePage({
     console.log("check succeeded", number, owner, hoseNumber);
 
     await createMaintenance({
-      username: username,
       fireHoseId: firehose.id,
       testPassed: true,
       failureDescription: null,
@@ -72,7 +71,6 @@ export default async function HoseMaintenancePage({
     "use server";
     console.log("check failed - reason: ", msg);
     await createMaintenance({
-      username: username,
       fireHoseId: firehose.id,
       testPassed: false,
       failureDescription: msg,
