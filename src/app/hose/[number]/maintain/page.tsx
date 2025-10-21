@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { createMaintenance } from "@/lib/maintenanceRepository";
 import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
-import { requireAuth } from "@/lib/requireAuth";
 import MaintainHoseForm from "@/app/_components/maintain-hose-form";
 import HoseNotFound from "@/app/_components/hose-not-found/hose-not-found";
 
@@ -16,18 +15,6 @@ export default async function HoseMaintenancePage({
 }: HoseMaintenancePageProps) {
   const { number } = await params;
   const [owner, hoseNumber] = decodeURIComponent(number).split("__");
-
-  const session = await requireAuth();
-  const username = session?.user?.name;
-
-  if (!username) {
-    console.log(
-      "no user found in session - redirecting to home",
-      "session",
-      session,
-    );
-    redirect("/");
-  }
 
   const firehose = await getFireHoseByNumberAndOwner(
     parseInt(hoseNumber),

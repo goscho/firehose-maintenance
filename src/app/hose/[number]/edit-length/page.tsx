@@ -4,7 +4,6 @@ import {
   getFireHoseByNumberAndOwner,
   updateFireHose,
 } from "@/lib/fireHoseRepository";
-import { requireAuth } from "@/lib/requireAuth";
 
 export interface HoseLengthEditPageProps {
   params: Promise<{
@@ -17,18 +16,6 @@ export default async function HoseLengthEditPage({
 }: HoseLengthEditPageProps) {
   const { number } = await params;
   const [owner, hoseNumber] = decodeURIComponent(number).split("__");
-
-  const session = await requireAuth();
-  const username = session?.user?.name;
-
-  if (!username) {
-    console.log(
-      "no user found in session - redirecting to home",
-      "session",
-      session,
-    );
-    redirect("/");
-  }
 
   const firehose = await getFireHoseByNumberAndOwner(
     parseInt(hoseNumber),

@@ -18,7 +18,6 @@ This application provides a comprehensive system for tracking fire hose maintena
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS v4
 - **Database**: PostgreSQL with Prisma ORM
-- **Authentication**: NextAuth.js v5 (beta)
 - **UI Components**: Custom touch-optimized components with Storybook
 - **Package Manager**: pnpm
 
@@ -65,25 +64,12 @@ The application uses a PostgreSQL database with the following main entities:
 - PostgreSQL database
 - Environment variables (see below)
 
-### Environment Setup
-
-Create a `.env.local` file with:
-
-```bash
-DATABASE_URL="postgresql://username:password@localhost:5432/firehose_maintenance"
-NEXTAUTH_SECRET="your-secret-here"
-NEXTAUTH_URL="http://localhost:3000"
-```
-
 ### Installation
 
 ```bash
 # Start Postgres, Logto and Adminer
 docker compose up -d
-````
-Visit [your local Logto admin panel](http://localhost:3002/) and create an app to be used with this application. Use `http://localhost:3000/api/auth/callback/logto` as RedirectURI
 
-```bash
 # copy template.env to .env and provide the the missing values
 mv template.env .env
 

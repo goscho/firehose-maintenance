@@ -1,22 +1,4 @@
 services:
-  logto:
-    depends_on:
-      db:
-        condition: service_healthy
-    image: svhd/logto:${TAG-latest}
-    entrypoint: ["sh", "-c", "npm run cli db seed -- --swe && npm start"]
-    restart: unless-stopped
-    ports:
-      - 3001:3001
-      - 3002:3002
-    environment:
-      - TRUST_PROXY_HEADER=1
-      - DB_URL=postgres://postgres:local-dev@db:5432/logto
-      # Mandatory for GitPod to map host env to the container, thus GitPod can dynamically configure the public URL of Logto;
-      # Or, you can leverage it for local testing.
-      - ENDPOINT
-      - ADMIN_ENDPOINT
-
   db:
     image: postgres:17.6-alpine
     restart: unless-stopped
