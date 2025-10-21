@@ -25,8 +25,8 @@
     "@storybook/addon-styling-webpack": "^2.0.0",
     "@storybook/nextjs": "^9.1.13",
     "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/postcss": "^4.1.12",
-    "@types/node": "^20.19.11",
+    "@tailwindcss/postcss": "^4.1.15",
+    "@types/node": "^20.19.23",
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
     "eslint": "^9.33.0",
@@ -37,8 +37,8 @@
     "prettier": "3.6.2",
     "prisma": "^6.17.1",
     "storybook": "^9.1.13",
-    "tailwindcss": "^4.1.12",
-    "tsx": "^4.20.4",
+    "tailwindcss": "^4.1.15",
+    "tsx": "^4.20.6",
     "typescript": "^5.8.3"
   },
   "eslintConfig": {
