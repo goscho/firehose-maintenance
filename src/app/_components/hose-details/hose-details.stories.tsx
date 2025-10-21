@@ -26,7 +26,6 @@ const mockFirehose: FireHose = {
   maintenances: [
     {
       id: "m3",
-      username: "max.mustermann",
       timestamp: new Date("2024-09-20T14:30:00"),
       testPassed: true,
       failureDescription: null,
@@ -34,7 +33,6 @@ const mockFirehose: FireHose = {
     },
     {
       id: "m2",
-      username: "anna.meier",
       timestamp: new Date("2024-06-15T10:15:00"),
       testPassed: false,
       failureDescription: "Loch im Schlauch",
@@ -42,7 +40,6 @@ const mockFirehose: FireHose = {
     },
     {
       id: "m1",
-      username: "peter.schmidt",
       timestamp: new Date("2024-03-10T16:45:00"),
       testPassed: true,
       failureDescription: null,
@@ -65,7 +62,6 @@ const mockFirehoseFailedTest: FireHose = {
   maintenances: [
     {
       id: "m4",
-      username: "test.user",
       timestamp: new Date("2024-09-22T09:00:00"),
       testPassed: false,
       failureDescription: "Einband defekt, Kupplungen beschädigt",
