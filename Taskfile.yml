@@ -24,7 +24,7 @@ tasks:
       - sh: '[ `git status --porcelain=1 | wc -l` -eq 0 ]'
         msg: Working directory is not clean. Please commit all changes to prevent untracked files in the docker build context.
     vars:
-      CONTAINER_REGISTRY: registry.fw-murrhardt.net
+      CONTAINER_REGISTRY: registry.ffm.internal
       IMAGE_NAME: firehose-maintenance
       # holds the tag of the current commit or just the commit hash if no tag is present
       GIT_TAG_OR_COMMIT:
