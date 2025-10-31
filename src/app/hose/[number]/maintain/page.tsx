@@ -75,6 +75,7 @@ export default async function HoseMaintenancePage({
       <h2 className={"text-2xl"}>Schlauch {number} reinigen und prüfen</h2>
       <MaintainHoseForm
         defectDescriptions={defectDescriptions}
+        firehose={firehose}
         onCheckSuccess={success}
         onCheckFailed={failed}
         onCancel={cancel}
