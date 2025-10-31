@@ -24,7 +24,6 @@ export default function EditLengthForm({
 
   return (
     <div className="flex flex-col items-center gap-6 p-6">
-      <h1 className="text-3xl font-bold">Schlauchlänge bearbeiten</h1>
       <div className="text-center">
         <p className="text-lg text-gray-600 mb-4">
           Aktuelle Länge: {currentLength}m

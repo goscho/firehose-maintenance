@@ -1,9 +1,6 @@
 import EditLengthForm from "@/app/_components/edit-length-form";
 import { redirect } from "next/navigation";
-import {
-  getFireHoseByNumberAndOwner,
-  updateFireHose,
-} from "@/lib/fireHoseRepository";
+import { getFireHoseByNumberAndOwner, updateFireHose } from "@/lib/fireHoseRepository";
 
 export interface HoseLengthEditPageProps {
   params: Promise<{
@@ -42,7 +39,10 @@ export default async function HoseLengthEditPage({
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center">
+    <main className="flex min-h-screen flex-col items-center p-6">
+      <h1 className="text-3xl font-bold">
+        Länge von Schlauch {firehose.owner.marker}-{firehose.number} bearbeiten
+      </h1>
       <EditLengthForm
         currentLength={firehose.length}
         onSave={handleSave}

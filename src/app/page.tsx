@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function Home() {
   return (
-    <main>
+    <main className="p-6">
       <HoseSelector />
       <div className="fixed bottom-6 right-6">
         <Link href={"/hose/new"}>

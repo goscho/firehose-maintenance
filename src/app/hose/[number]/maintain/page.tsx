@@ -71,8 +71,10 @@ export default async function HoseMaintenancePage({
   };
 
   return (
-    <main className={"flex flex-col gap-5 items-center w-full"}>
-      <h2 className={"text-2xl"}>Schlauch {number} reinigen und prüfen</h2>
+    <main className={"flex flex-col p-6 gap-6 items-center w-full"}>
+      <h1 className="text-3xl font-bold">
+        Schlauch {firehose.owner.marker}-{firehose.number} reinigen und prüfen
+      </h1>
       <MaintainHoseForm
         defectDescriptions={defectDescriptions}
         firehose={firehose}
