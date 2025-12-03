@@ -28,7 +28,7 @@ tasks:
       IMAGE_NAME: firehose-maintenance
       # holds the tag of the current commit or just the commit hash if no tag is present
       GIT_TAG_OR_COMMIT:
-        sh: git describe --tags --abbrev=0 2>/dev/null || git log -n 1 --format=%h
+        sh: git describe --tags --exact-match 2>/dev/null || git log -n 1 --format=%h
       IMAGE_TAG:
         sh: echo {{.GIT_TAG_OR_COMMIT}}
       FULL_NAME:
