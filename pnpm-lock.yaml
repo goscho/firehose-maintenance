@@ -13,8 +13,8 @@ importers:
   .:
     dependencies:
       '@prisma/client':
-        specifier: ^6.17.1
-        version: 6.17.1(prisma@6.19.1(typescript@5.8.3))(typescript@5.8.3)
+        specifier: ^6.19.1
+        version: 6.19.1(prisma@6.19.1(typescript@5.8.3))(typescript@5.8.3)
       next:
         specifier: 15.5.9
         version: 15.5.9(@babel/core@7.26.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -1350,8 +1350,8 @@ packages:
       webpack-plugin-serve:
         optional: true
 
-  '@prisma/client@6.17.1':
-    resolution: {integrity: sha512-zL58jbLzYamjnNnmNA51IOZdbk5ci03KviXCuB0Tydc9btH2kDWsi1pQm2VecviRTM7jGia0OPPkgpGnT3nKvw==}
+  '@prisma/client@6.19.1':
+    resolution: {integrity: sha512-4SXj4Oo6HyQkLUWT8Ke5R0PTAfVOKip5Roo+6+b2EDTkFg5be0FnBWiuRJc0BC0sRQIWGMLKW1XguhVfW/z3/A==}
     engines: {node: '>=18.18'}
     peerDependencies:
       prisma: '*'
@@ -5784,7 +5784,7 @@ snapshots:
       type-fest: 2.19.0
       webpack-hot-middleware: 2.26.1
 
-  '@prisma/client@6.17.1(prisma@6.19.1(typescript@5.8.3))(typescript@5.8.3)':
+  '@prisma/client@6.19.1(prisma@6.19.1(typescript@5.8.3))(typescript@5.8.3)':
     optionalDependencies:
       prisma: 6.19.1(typescript@5.8.3)
       typescript: 5.8.3
