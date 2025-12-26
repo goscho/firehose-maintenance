@@ -15,7 +15,8 @@
     "@prisma/client": "^6.19.1",
     "next": "15.5.9",
     "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "sonner": "^2.0.7"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.3",
