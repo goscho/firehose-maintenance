@@ -1,6 +1,7 @@
 import TouchButton from "@/app/_components/touch-button";
 import HoseDetails from "@/app/_components/hose-details";
 import { redirect } from "next/navigation";
+import { createFirehoseSlug, parseFirehoseSlug } from "@/lib/navigationUtils";
 import {
   decommissionFireHose,
   getFireHoseByNumberAndOwner,
@@ -16,7 +17,7 @@ export default async function HoseDecommissionPage({
   params,
 }: HoseDecommissionPageProps) {
   const { number } = await params;
-  const [owner, hoseNumber] = decodeURIComponent(number).split("__");
+  const [owner, hoseNumber] = parseFirehoseSlug(number);
 
   const firehose = await getFireHoseByNumberAndOwner(
     parseInt(hoseNumber),
@@ -39,7 +40,7 @@ export default async function HoseDecommissionPage({
 
   const handleCancel = async () => {
     "use server";
-    redirect(`/hose/${encodeURIComponent(number)}`);
+    redirect(`/hose/${createFirehoseSlug(firehose)}`);
   };
 
   return (

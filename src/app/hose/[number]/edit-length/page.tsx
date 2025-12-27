@@ -1,6 +1,10 @@
 import EditLengthForm from "@/app/_components/edit-length-form";
 import { redirect } from "next/navigation";
-import { getFireHoseByNumberAndOwner, updateFireHose } from "@/lib/fireHoseRepository";
+import { createFirehoseSlug, parseFirehoseSlug } from "@/lib/navigationUtils";
+import {
+  getFireHoseByNumberAndOwner,
+  updateFireHose,
+} from "@/lib/fireHoseRepository";
 
 export interface HoseLengthEditPageProps {
   params: Promise<{
@@ -12,7 +16,7 @@ export default async function HoseLengthEditPage({
   params,
 }: HoseLengthEditPageProps) {
   const { number } = await params;
-  const [owner, hoseNumber] = decodeURIComponent(number).split("__");
+  const [owner, hoseNumber] = parseFirehoseSlug(number);
 
   const firehose = await getFireHoseByNumberAndOwner(
     parseInt(hoseNumber),
@@ -30,12 +34,12 @@ export default async function HoseLengthEditPage({
 
     await updateFireHose(firehose.id, { length: newLength });
     console.log("length updated", number);
-    redirect(`/hose/${encodeURIComponent(number)}`);
+    redirect(`/hose/${createFirehoseSlug(firehose)}`);
   };
 
   const handleCancel = async () => {
     "use server";
-    redirect(`/hose/${encodeURIComponent(number)}`);
+    redirect(`/hose/${createFirehoseSlug(firehose)}`);
   };
 
   return (

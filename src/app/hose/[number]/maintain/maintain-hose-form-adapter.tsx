@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import MaintainHoseForm from "@/app/_components/maintain-hose-form";
 import { FireHose } from "@/lib/types";
 import { createMaintenance } from "@/lib/maintenanceRepository";
+import { createFirehoseSlug } from "@/lib/navigationUtils";
 import { useRouter } from "next/navigation";
 
 interface MaintainHoseFormAdapterProps {
@@ -53,9 +54,7 @@ export default function MaintainHoseFormAdapter({
       description: `Schlauch ${firehose.owner.marker}-${firehose.number}: ${msg}`,
     });
     if (navigateToHoseDetails) {
-      router.push(
-        `/hose/${encodeURIComponent(`${firehose.owner.marker}__${firehose.number}`)}`,
-      );
+      router.push(`/hose/${createFirehoseSlug(firehose)}`);
     } else {
       router.push("/");
     }

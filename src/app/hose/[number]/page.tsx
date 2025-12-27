@@ -1,4 +1,5 @@
 import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
+import { createFirehoseSlug, parseFirehoseSlug } from "@/lib/navigationUtils";
 import TouchButton from "@/app/_components/touch-button";
 import HoseDetails from "@/app/_components/hose-details";
 import Link from "next/link";
@@ -12,7 +13,7 @@ export interface HosePageProps {
 
 export default async function HosePage({ params }: HosePageProps) {
   const { number } = await params;
-  const [owner, hoseNumber] = decodeURIComponent(number).split("__");
+  const [owner, hoseNumber] = parseFirehoseSlug(number);
 
   const firehose = await getFireHoseByNumberAndOwner(
     parseInt(hoseNumber),
@@ -37,19 +38,13 @@ export default async function HosePage({ params }: HosePageProps) {
         <Link href="/">
           <TouchButton label="Abbrechen" />
         </Link>
-        <Link
-          href={`/hose/${firehose.owner.marker}__${firehose.number}/edit-length`}
-        >
+        <Link href={`/hose/${createFirehoseSlug(firehose)}/edit-length`}>
           <TouchButton label="Länge bearbeiten" />
         </Link>
-        <Link
-          href={`/hose/${firehose.owner.marker}__${firehose.number}/decommission`}
-        >
+        <Link href={`/hose/${createFirehoseSlug(firehose)}/decommission`}>
           <TouchButton label="Ausmustern" />
         </Link>
-        <Link
-          href={`/hose/${firehose.owner.marker}__${firehose.number}/maintain`}
-        >
+        <Link href={`/hose/${createFirehoseSlug(firehose)}/maintain`}>
           <TouchButton label="Reinigen & Prüfen" primary />
         </Link>
       </div>

@@ -1,6 +1,7 @@
 import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
+import { parseFirehoseSlug } from "@/lib/navigationUtils";
 import HoseNotFound from "@/app/_components/hose-not-found/hose-not-found";
-import MaintainHoseFormAdapter from "@/app/hose/[number]/maintain/wrapper";
+import MaintainHoseFormAdapter from "@/app/hose/[number]/maintain/maintain-hose-form-adapter";
 
 export interface HoseMaintenancePageProps {
   params: Promise<{
@@ -12,7 +13,7 @@ export default async function HoseMaintenancePage({
   params,
 }: HoseMaintenancePageProps) {
   const { number } = await params;
-  const [owner, hoseNumber] = decodeURIComponent(number).split("__");
+  const [owner, hoseNumber] = parseFirehoseSlug(number);
 
   const firehose = await getFireHoseByNumberAndOwner(
     parseInt(hoseNumber),
