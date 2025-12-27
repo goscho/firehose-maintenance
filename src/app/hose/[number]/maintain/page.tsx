@@ -1,8 +1,6 @@
-import { redirect } from "next/navigation";
-import { createMaintenance } from "@/lib/maintenanceRepository";
 import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
-import MaintainHoseForm from "@/app/_components/maintain-hose-form";
 import HoseNotFound from "@/app/_components/hose-not-found/hose-not-found";
+import MaintainHoseFormAdapter from "@/app/hose/[number]/maintain/wrapper";
 
 export interface HoseMaintenancePageProps {
   params: Promise<{
@@ -29,59 +27,12 @@ export default async function HoseMaintenancePage({
     );
   }
 
-  const defectDescriptions = [
-    "Einband defekt",
-    "Loch im Schlauch",
-    "sonstiges",
-  ];
-
-  const cancel = async () => {
-    "use server";
-    redirect("/");
-  };
-
-  const success = async () => {
-    "use server";
-    console.log("check succeeded", number, owner, hoseNumber);
-
-    await createMaintenance({
-      fireHoseId: firehose.id,
-      testPassed: true,
-      failureDescription: null,
-      timestamp: new Date(),
-    });
-    console.log("maintenance saved", number);
-    redirect("/");
-  };
-
-  const failed = async (msg: string, navigateToHoseDetails: boolean) => {
-    "use server";
-    console.log("check failed - reason: ", msg);
-    await createMaintenance({
-      fireHoseId: firehose.id,
-      testPassed: false,
-      failureDescription: msg,
-      timestamp: new Date(),
-    });
-    if (navigateToHoseDetails) {
-      redirect(`/hose/${encodeURIComponent(number)}`);
-    } else {
-      redirect("/");
-    }
-  };
-
   return (
     <main className={"flex flex-col p-6 gap-6 items-center w-full"}>
       <h1 className="text-3xl font-bold">
         Schlauch {firehose.owner.marker}-{firehose.number} reinigen und prüfen
       </h1>
-      <MaintainHoseForm
-        defectDescriptions={defectDescriptions}
-        firehose={firehose}
-        onCheckSuccess={success}
-        onCheckFailed={failed}
-        onCancel={cancel}
-      />
+      <MaintainHoseFormAdapter firehose={firehose} />
     </main>
   );
 }
