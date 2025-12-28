@@ -3,9 +3,14 @@
 import { useRouter } from "next/navigation";
 import NewHoseForm from "@/app/_components/new-hose-form";
 import { FireHose } from "@/lib/types";
-import { createFireHose, findMinFreeHoseNumber } from "@/lib/fireHoseRepository";
+import {
+  createFireHose,
+  findMinFreeHoseNumber,
+} from "@/lib/fireHoseRepository";
 import { useEffect, useState } from "react";
 import { OWNER_MURRHARDT } from "@/lib/static";
+import { createFirehoseSlug } from "@/lib/navigationUtils";
+import { toast } from "sonner";
 
 export default function NewHosePage() {
   const router = useRouter();
@@ -42,7 +47,12 @@ export default function NewHosePage() {
         diameter: data.diameter!,
         commissionedAt: data.commissionedAt!,
       });
-      router.push(`/hose/${data.owner!.marker}__${data.number}`);
+      toast.success("Schlauch erfolgreich gespeichert", {
+        description: `Neuer Schlauch ${data.owner!.marker}-${data.number} wurde angelegt`,
+      });
+      router.push(
+        `/hose/${createFirehoseSlug({ number: data.number!, owner: data.owner! })}`,
+      );
     } catch (err) {
       setError("Fehler beim Erstellen des Schlauchs. " + err);
     }
