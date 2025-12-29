@@ -70,7 +70,7 @@ export default function HoseDetails({ firehose }: HoseDetailsProps) {
       <div className="flex flex-row justify-between border-b pb-2 px-3">
         <span className="font-bold">Maße:</span>
         <span>
-          {firehose.diameter} {firehose.length}m
+          {firehose.diameter} {firehose.length}&nbsp;m
         </span>
       </div>
       <div className="flex flex-row justify-between border-b pb-2 px-3">
