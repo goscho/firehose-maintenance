@@ -1,11 +1,7 @@
-import TouchButton from "@/app/_components/touch-button";
-import HoseDetails from "@/app/_components/hose-details";
 import { redirect } from "next/navigation";
-import { createFirehoseSlug, parseFirehoseSlug } from "@/lib/navigationUtils";
-import {
-  decommissionFireHose,
-  getFireHoseByNumberAndOwner,
-} from "@/lib/fireHoseRepository";
+import { parseFirehoseSlug } from "@/lib/navigationUtils";
+import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
+import DecommissionHoseFormAdapter from "@/app/hose/[number]/decommission/decommission-hose-form-adapter";
 
 export interface HoseDecommissionPageProps {
   params: Promise<{
@@ -29,42 +25,12 @@ export default async function HoseDecommissionPage({
     redirect("/");
   }
 
-  const handleDecommission = async () => {
-    "use server";
-
-    console.log("decommissioning hose", firehose.id);
-    await decommissionFireHose(firehose.id);
-    console.log("hose decommissioned", number);
-    redirect("/");
-  };
-
-  const handleCancel = async () => {
-    "use server";
-    redirect(`/hose/${createFirehoseSlug(firehose)}`);
-  };
-
   return (
     <main className="flex min-h-screen flex-col items-center p-6 gap-6">
-      <h1 className="text-3xl font-bold text-red-600">
+      <h1 className="text-3xl font-bold">
         Schlauch {firehose.owner.marker}-{firehose.number} ausmustern
       </h1>
-      <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded max-w-md text-center">
-        <p className="font-medium mb-2">
-          Möchten Sie diesen Schlauch wirklich ausmustern?
-        </p>
-        <p className="text-sm">
-          Diese Aktion kann nicht rückgängig gemacht werden.
-        </p>
-      </div>
-      <HoseDetails firehose={firehose} />
-      <div className="flex gap-4 mt-6">
-        <form action={handleCancel}>
-          <TouchButton label="Abbrechen" type="submit" />
-        </form>
-        <form action={handleDecommission}>
-          <TouchButton label="Ausmustern" type="submit" primary />
-        </form>
-      </div>
+      <DecommissionHoseFormAdapter firehose={firehose} />
     </main>
   );
 }
