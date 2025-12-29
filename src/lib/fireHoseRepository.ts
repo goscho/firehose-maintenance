@@ -3,6 +3,8 @@
 import prisma from "./prisma";
 import { FireHose, FireHoseDiameter } from "./types";
 import { queryMinFreeHoseNumber } from "@/app/generated/prisma/sql";
+import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
+import { createFirehoseSlug } from "@/lib/navigationUtils";
 
 function validateFireHoseDiameter(value: string): boolean {
   return ["A", "B", "C", "D"].includes(value);
@@ -277,6 +279,7 @@ export async function updateFireHose(
     },
   });
 
+  revalidatePath("/hose/" + createFirehoseSlug(updatedFireHose));
   return {
     ...updatedFireHose,
     diameter: castToFireHoseDiameter(updatedFireHose.diameter),

@@ -1,10 +1,7 @@
-import EditLengthForm from "@/app/_components/edit-length-form";
 import { redirect } from "next/navigation";
-import { createFirehoseSlug, parseFirehoseSlug } from "@/lib/navigationUtils";
-import {
-  getFireHoseByNumberAndOwner,
-  updateFireHose,
-} from "@/lib/fireHoseRepository";
+import { parseFirehoseSlug } from "@/lib/navigationUtils";
+import { getFireHoseByNumberAndOwner } from "@/lib/fireHoseRepository";
+import EditLengthFormAdapter from "@/app/hose/[number]/edit-length/edit-length-form-adapter";
 
 export interface HoseLengthEditPageProps {
   params: Promise<{
@@ -28,30 +25,12 @@ export default async function HoseLengthEditPage({
     redirect("/");
   }
 
-  const handleSave = async (newLength: number) => {
-    "use server";
-    console.log("updating length", firehose.id, newLength);
-
-    await updateFireHose(firehose.id, { length: newLength });
-    console.log("length updated", number);
-    redirect(`/hose/${createFirehoseSlug(firehose)}`);
-  };
-
-  const handleCancel = async () => {
-    "use server";
-    redirect(`/hose/${createFirehoseSlug(firehose)}`);
-  };
-
   return (
     <main className="flex min-h-screen flex-col items-center p-6">
       <h1 className="text-3xl font-bold">
         Länge von Schlauch {firehose.owner.marker}-{firehose.number} bearbeiten
       </h1>
-      <EditLengthForm
-        currentLength={firehose.length}
-        onSave={handleSave}
-        onCancel={handleCancel}
-      />
+      <EditLengthFormAdapter firehose={firehose} />
     </main>
   );
 }
