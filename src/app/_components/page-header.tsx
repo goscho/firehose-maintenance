@@ -6,6 +6,9 @@ export default async function PageHeader() {
       <h1 className="text-3xl font-bold leading-none tracking-tight my-auto">
         <Link href={"/"}>Schlauchverwaltung</Link>
       </h1>
+      <div className={"text-gray-500"}>
+        {process.env.NEXT_PUBLIC_APP_VERSION}
+      </div>
     </header>
   );
 }

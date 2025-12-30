@@ -34,4 +34,4 @@ tasks:
       FULL_NAME:
         sh: echo "{{.CONTAINER_REGISTRY}}/{{.IMAGE_NAME}}:{{.IMAGE_TAG}}"
     cmds:
-      - docker build --platform {{.PLATTFORM}} -t {{.FULL_NAME}} .
+      - docker build --build-arg app_version={{.IMAGE_TAG}} --platform {{.PLATTFORM}} -t {{.FULL_NAME}} .
