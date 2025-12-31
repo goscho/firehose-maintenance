@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 
 import MaintainHoseForm from "./maintain-hose-form";
 import { fn } from "storybook/test";

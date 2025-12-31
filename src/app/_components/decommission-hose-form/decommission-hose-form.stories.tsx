@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import DecommissionHoseForm from "./decommission-hose-form";
 import { FireHose } from "@/lib/types";
 import { fn } from "storybook/test";
