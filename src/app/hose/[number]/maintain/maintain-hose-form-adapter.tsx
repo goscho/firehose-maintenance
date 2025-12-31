@@ -22,10 +22,6 @@ export default function MaintainHoseFormAdapter({
     "sonstiges",
   ];
 
-  const cancel = async () => {
-    router.push("/");
-  };
-
   const success = async () => {
     console.log("check succeeded", firehose.number, firehose.owner);
 
@@ -67,7 +63,7 @@ export default function MaintainHoseFormAdapter({
         firehose={firehose}
         onCheckSuccess={success}
         onCheckFailed={failed}
-        onCancel={cancel}
+        onCancel={router.back}
       />
     </>
   );
