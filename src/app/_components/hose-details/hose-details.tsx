@@ -1,4 +1,5 @@
 import { FireHose } from "@/lib/types";
+import HoseTestHistory from "@/app/_components/hose-test-history";
 
 export interface HoseDetailsProps {
   firehose: FireHose;
@@ -87,6 +88,9 @@ export default function HoseDetails({ firehose }: HoseDetailsProps) {
         <span className="font-bold">Letzte Prüfung:</span>
         <span className="text-base">{renderLatestMaintenance()}</span>
       </div>
+      {firehose.maintenances.length > 1 && (
+        <HoseTestHistory maintenances={firehose.maintenances} />
+      )}
     </div>
   );
 }
