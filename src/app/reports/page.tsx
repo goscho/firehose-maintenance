@@ -13,6 +13,11 @@ export default async function ReportsPage() {
           description="Übersicht aller ausgemusterten Schläuche in einem Zeitraum"
           href="/reports/decommissioned"
         />
+        <ReportCard
+          title="Nicht bestandene Prüfungen"
+          description="Schläuche, die die letzte Prüfung nicht bestanden haben"
+          href="/reports/failed-test"
+        />
       </div>
 
       <div className="mt-6">

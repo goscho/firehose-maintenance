@@ -444,3 +444,40 @@ export async function getDecommissionedFireHoses(
     diameter: castToFireHoseDiameter(fireHose.diameter),
   }));
 }
+
+/**
+ * Gets all active FireHoses for a specific owner where the most recent test failed
+ * @param ownerId The ID of the owner
+ * @returns Array of FireHoses with failed latest test, sorted by diameter and number
+ */
+export async function getFailedTestFireHoses(ownerId: string): Promise<FireHose[]> {
+  if (!ownerId) {
+    throw new Error("Owner ID is required");
+  }
+
+  const fireHoses = await prisma.fireHose.findMany({
+    where: {
+      ownerId,
+      decommissionedAt: null,
+    },
+    include: {
+      owner: true,
+      maintenances: {
+        orderBy: {
+          timestamp: "desc",
+        },
+      },
+    },
+    orderBy: [{ number: "asc" }],
+  });
+
+  const failedHoses = fireHoses.filter((hose) => {
+    const latestMaintenance = hose.maintenances[0];
+    return latestMaintenance && !latestMaintenance.testPassed;
+  });
+
+  return failedHoses.map((fireHose) => ({
+    ...fireHose,
+    diameter: castToFireHoseDiameter(fireHose.diameter),
+  }));
+}
