@@ -21,6 +21,12 @@ function castFromFireHoseDiameter(value: FireHoseDiameter): string {
   return value as string;
 }
 
+function revalidateFirehosePath(
+  decommissionedFireHose: Pick<FireHose, "number" | "owner">,
+) {
+  revalidatePath("/hose/" + createFirehoseSlug(decommissionedFireHose));
+}
+
 /**
  * Creates a new FireHose in the database
  * @param data The FireHose data to create
@@ -279,7 +285,8 @@ export async function updateFireHose(
     },
   });
 
-  revalidatePath("/hose/" + createFirehoseSlug(updatedFireHose));
+  revalidateFirehosePath(updatedFireHose);
+
   return {
     ...updatedFireHose,
     diameter: castToFireHoseDiameter(updatedFireHose.diameter),
@@ -325,6 +332,8 @@ export async function decommissionFireHose(
       maintenances: true,
     },
   });
+
+  revalidateFirehosePath(decommissionedFireHose);
 
   return {
     ...decommissionedFireHose,

@@ -4,7 +4,6 @@ import DecommissionHoseForm from "@/app/_components/decommission-hose-form";
 import { FireHose } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import { decommissionFireHose } from "@/lib/fireHoseRepository";
-import { createFirehoseSlug } from "@/lib/navigationUtils";
 import { toast } from "sonner";
 
 interface DecommissionHoseFormAdapterProps {
@@ -25,14 +24,10 @@ export default function DecommissionHoseFormAdapter({
     router.push("/");
   };
 
-  const handleCancel = async () => {
-    router.push(`/hose/${createFirehoseSlug(firehose)}`);
-  };
-
   return (
     <DecommissionHoseForm
       firehose={firehose}
-      onCancel={handleCancel}
+      onCancel={router.back}
       onDecommission={handleDecommission}
     />
   );

@@ -58,19 +58,13 @@ export default function NewHosePage() {
     }
   };
 
-  // Handle form cancellation
-  const handleCancel = () => {
-    // Navigate back to home
-    router.push("/");
-  };
-
   return (
     <main className="flex min-h-screen flex-col items-center p-6 gap-6">
       <h1 className="text-3xl font-bold">Neuen Schlauch anlegen</h1>
       {error && <p className="text-red-500">{error}</p>}
       <NewHoseForm
         onSubmit={handleSubmit}
-        onCancel={handleCancel}
+        onCancel={router.back}
         freeNumber={freeNumber}
         freeNumberLoading={freeNumberLoading}
       />

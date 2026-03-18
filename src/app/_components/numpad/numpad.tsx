@@ -8,14 +8,31 @@ export interface NumpadProps {
   onValueChange?: (value: string) => void;
 }
 
-export default function Numpad({ initialValue, onValueChange }: NumpadProps) {
-  const [value, setValue] = useState(initialValue || "");
+export default function Numpad({
+  initialValue = "",
+  onValueChange,
+}: NumpadProps) {
+  const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
+  const updateValue = (newValue: string) => {
+    setValue(newValue);
     if (onValueChange) {
-      onValueChange(value);
+      onValueChange(newValue);
     }
-  }, [onValueChange, value]);
+  };
+
+  const addDigit = (digit: number): void => {
+    updateValue(value + String(digit));
+  };
+
+  const deleteRightDigit = (): void => {
+    const newLength = value.length - 1;
+    updateValue(value.substring(0, newLength));
+  };
 
   const numbers = new Array(10).fill(1).map((_, i) => (i + 1) % 10);
 
@@ -25,15 +42,12 @@ export default function Numpad({ initialValue, onValueChange }: NumpadProps) {
         <TouchButton
           key={num}
           label={String(num)}
-          onClick={() => setValue(value + num)}
+          onClick={() => addDigit(num)}
           primary
         />
       ))}
-      <TouchButton
-        label={"DEL"}
-        onClick={() => setValue(value.substring(0, value.length - 1))}
-      />
-      <TouchButton label={"AC"} onClick={() => setValue("")} />
+      <TouchButton label={"DEL"} onClick={() => deleteRightDigit()} />
+      <TouchButton label={"AC"} onClick={() => updateValue("")} />
     </div>
   );
 }
