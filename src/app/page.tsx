@@ -6,7 +6,10 @@ export default async function Home() {
   return (
     <main className="p-6">
       <HoseSelector />
-      <div className="fixed bottom-6 right-6">
+      <div className="fixed bottom-6 right-6 flex gap-3">
+        <Link href={"/reports"}>
+          <TouchButton label="Berichte" className="rounded-full shadow-lg" />
+        </Link>
         <Link href={"/hose/new"}>
           <TouchButton
             label="Neuer Schlauch"

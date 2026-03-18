@@ -397,3 +397,50 @@ export async function findMinFreeHoseNumber(ownerId: string): Promise<number> {
   }
   return minFreeNumber.min_free_number;
 }
+
+/**
+ * Gets all decommissioned FireHoses for a specific owner within a date range
+ * @param ownerId The ID of the owner
+ * @param startDate Start of the date range (inclusive)
+ * @param endDate End of the date range (inclusive)
+ * @returns Array of decommissioned FireHoses sorted by diameter and number
+ */
+export async function getDecommissionedFireHoses(
+  ownerId: string,
+  startDate: Date,
+  endDate: Date,
+): Promise<FireHose[]> {
+  if (!ownerId) {
+    throw new Error("Owner ID is required");
+  }
+  if (!startDate || !endDate) {
+    throw new Error("Start and end dates are required");
+  }
+  if (startDate > endDate) {
+    throw new Error("Start date must be before or equal to end date");
+  }
+
+  const fireHoses = await prisma.fireHose.findMany({
+    where: {
+      ownerId,
+      decommissionedAt: {
+        gte: startDate,
+        lte: endDate,
+      },
+    },
+    include: {
+      owner: true,
+      maintenances: {
+        orderBy: {
+          timestamp: "desc",
+        },
+      },
+    },
+    orderBy: [{ diameter: "asc" }, { number: "asc" }],
+  });
+
+  return fireHoses.map((fireHose) => ({
+    ...fireHose,
+    diameter: castToFireHoseDiameter(fireHose.diameter),
+  }));
+}
