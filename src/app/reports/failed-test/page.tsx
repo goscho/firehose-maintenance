@@ -4,6 +4,8 @@ import FailedTestReport from "@/app/_components/failed-test-report";
 import TouchButton from "@/app/_components/touch-button";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export default async function FailedTestReportPage() {
   const hoses = await getFailedTestFireHoses(OWNER_MURRHARDT.id);
 
