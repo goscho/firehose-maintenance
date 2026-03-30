@@ -476,7 +476,13 @@ export async function getFailedTestFireHoses(ownerId: string): Promise<FireHose[
     return latestMaintenance && !latestMaintenance.testPassed;
   });
 
-  return failedHoses.map((fireHose) => ({
+  const sortedByLatestTest = failedHoses.sort((a, b) => {
+    const dateA = a.maintenances[0]?.timestamp.getTime() ?? 0;
+    const dateB = b.maintenances[0]?.timestamp.getTime() ?? 0;
+    return dateB - dateA;
+  });
+
+  return sortedByLatestTest.map((fireHose) => ({
     ...fireHose,
     diameter: castToFireHoseDiameter(fireHose.diameter),
   }));
