@@ -1,6 +1,4 @@
 import ReportCard from "@/app/_components/report-card";
-import TouchButton from "@/app/_components/touch-button";
-import Link from "next/link";
 
 export default async function ReportsPage() {
   return (
@@ -18,12 +16,6 @@ export default async function ReportsPage() {
           description="Schläuche, die die letzte Prüfung nicht bestanden haben"
           href="/reports/failed-test"
         />
-      </div>
-
-      <div className="mt-6">
-        <Link href="/">
-          <TouchButton label="Zurück zur Startseite" />
-        </Link>
       </div>
     </main>
   );

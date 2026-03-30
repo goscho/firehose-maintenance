@@ -1,10 +1,8 @@
 import { getFailedTestFireHoses } from "@/lib/fireHoseRepository";
 import { OWNER_MURRHARDT } from "@/lib/static";
 import FailedTestReport from "@/app/_components/failed-test-report";
-import TouchButton from "@/app/_components/touch-button";
-import Link from "next/link";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function FailedTestReportPage() {
   const hoses = await getFailedTestFireHoses(OWNER_MURRHARDT.id);
@@ -15,15 +13,6 @@ export default async function FailedTestReportPage() {
 
       <div className="w-full max-w-6xl">
         <FailedTestReport hoses={hoses} ownerName={OWNER_MURRHARDT.name} />
-      </div>
-
-      <div className="flex gap-4 mt-4">
-        <Link href="/reports">
-          <TouchButton label="Zurück zu Berichte" />
-        </Link>
-        <Link href="/">
-          <TouchButton label="Zur Startseite" />
-        </Link>
       </div>
     </main>
   );
