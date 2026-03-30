@@ -5,8 +5,6 @@ import DateRangeSelector, {
   DateRangePreset,
 } from "@/app/_components/date-range-selector";
 import DecommissionedReport from "@/app/_components/decommissioned-report";
-import TouchButton from "@/app/_components/touch-button";
-import Link from "next/link";
 import { FireHose } from "@/lib/types";
 
 interface DecommissionedReportAdapterProps {
@@ -50,15 +48,6 @@ export default function DecommissionedReportAdapter({
         endDate={endDate}
         ownerName={ownerName}
       />
-
-      <div className="flex gap-4 mt-4">
-        <Link href="/reports">
-          <TouchButton label="Zurück zu Berichte" />
-        </Link>
-        <Link href="/">
-          <TouchButton label="Zur Startseite" />
-        </Link>
-      </div>
     </div>
   );
 }
