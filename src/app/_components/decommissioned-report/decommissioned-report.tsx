@@ -20,6 +20,7 @@ function formatDate(date: Date): string {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
+    timeZone: "UTC",
   });
 }
 
@@ -31,6 +32,7 @@ function formatDateTime(date: Date): string {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
+    timeZone: "UTC",
   });
 }
 
