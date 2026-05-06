@@ -13,17 +13,27 @@ export default async function HoseMaintenancePage({
   params,
 }: HoseMaintenancePageProps) {
   const { number } = await params;
-  const [owner, hoseNumber] = parseFirehoseSlug(number);
+  const [owner, hoseNumberString] = parseFirehoseSlug(number);
+    const hoseNumber = parseInt(hoseNumberString, 10);
+  
+    if(isNaN(hoseNumber) || hoseNumber <= 0) {
+      console.warn(`Ungültige Schlauchnummer: ${hoseNumberString}`);
+      return (
+        <main className="flex min-h-screen flex-col items-center p-6 gap-6">
+          <HoseNotFound ownerMarker={owner} hoseNumber={hoseNumberString} />
+        </main>
+      );
+    }
 
   const firehose = await getFireHoseByNumberAndOwner(
-    parseInt(hoseNumber),
+    hoseNumber,
     owner,
   );
 
   if (!firehose) {
     return (
       <main className={"flex flex-col gap-5 items-center w-full"}>
-        <HoseNotFound ownerMarker={owner} hoseNumber={hoseNumber} />
+        <HoseNotFound ownerMarker={owner} hoseNumber={hoseNumberString} />
       </main>
     );
   }
