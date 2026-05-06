@@ -16,7 +16,8 @@ export default function HoseSelector() {
 
   const buildHoseNumber = () => {
     if (hoseNumber) {
-      return ownerMarker + "__" + hoseNumber;
+      //parseInt removes leading zeros, which is important for the slug format
+      return ownerMarker + "__" + parseInt(hoseNumber, 10);
     }
   };
 
